@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organ Match Prediction</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #ffffff);
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            width: 380px;
+            margin: 40px auto;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #0d47a1;
+        }
+
+        input, select {
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d47a1;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .success {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .fail {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2><i class="fas fa-heartbeat icon"></i>Organ Matching System</h2>
+
+    <form action="/predict" method="post">
+
+        <input type="number" name="donor_age" placeholder="Donor Age" required>
+
+        <input type="number" name="recipient_age" placeholder="Recipient Age" required>
+
+        <select name="donor_blood">
+            <option value="">Donor Blood Group</option>
+            <option value="0">A</option>
+            <option value="1">B</option>
+            <option value="2">AB</option>
+            <option value="3">O</option>
+        </select>
+
+        <select name="recipient_blood">
+            <option value="">Recipient Blood Group</option>
+            <option value="0">A</option>
+            <option value="1">B</option>
+            <option value="2">AB</option>
+            <option value="3">O</option>
+        </select>
+
+        <select name="organ_type">
+            <option value="">Organ Type</option>
+            <option value="0">Liver</option>
+            <option value="1">Kidney</option>
+            <option value="2">Lung</option>
+            <option value="3">Heart</option>
+        </select>
+
+        <select name="urgency">
+            <option value="">Urgency Level</option>
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
+        </select>
+
+        <select name="hla">
+            <option value="">HLA Match</option>
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
+        </select>
+
+        <input type="number" name="severity" placeholder="Severity Score (1-5)" required>
+
+        <select name="quality">
+            <option value="">Organ Quality</option>
+            <option value="0">Good</option>
+            <option value="1">Average</option>
+            <option value="2">Poor</option>
+        </select>
+
+        <input type="number" name="score" placeholder="Compatibility Score" required>
+
+        <button type="submit"><i class="fas fa-stethoscope"></i> Predict</button>
+
+    </form>
+
+    {% if prediction %}
+        <div class="result {% if 'Suitable' in prediction %}success{% else %}fail{% endif %}">
+            <i class="fas fa-heart"></i> {{ prediction }} <br>
+            Confidence: {{ confidence }}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
